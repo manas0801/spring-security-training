@@ -18,4 +18,23 @@ public class HelloController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>("Hello From Spring Security From "+authentication.getPrincipal().toString(), HttpStatus.OK);
     }
+
+    @GetMapping("/read")
+    public ResponseEntity<String> read(){
+
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>("Hello From Spring Security-READ From "+authentication.getPrincipal().toString(), HttpStatus.OK);
+    }
+    @GetMapping("/write")
+    public ResponseEntity<String> write(){
+
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>("Hello From Spring Security-Write From "+authentication.getPrincipal().toString(), HttpStatus.OK);
+    }
+    @GetMapping("/auth")
+    public ResponseEntity<String> auth(){
+
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>("Hello From Spring Security-AUth From "+authentication.getPrincipal().toString(), HttpStatus.OK);
+    }
 }

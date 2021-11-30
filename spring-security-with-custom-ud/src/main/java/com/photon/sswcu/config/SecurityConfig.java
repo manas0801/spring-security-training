@@ -21,20 +21,20 @@ import java.util.List;
 public class SecurityConfig {
 
 
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        SecurityUser securityUser1= new SecurityUser("user1",passwordEncoder().encode("12345"), "READ");
-//        SecurityUser securityUser2= new SecurityUser("user2",passwordEncoder().encode("12345"),"READ");
-//
-//        List<? extends UserDetails> list=  Arrays.asList(securityUser1,securityUser2);
-//
-//        CustomUserDetailsService customUserDetailsService= new CustomUserDetailsService(list);
-//
-//        return customUserDetailsService;
-//
-//
-//
-//    }
+    @Bean
+    public UserDetailsService userDetailsService(){
+        SecurityUser securityUser1= new SecurityUser("user1","12345", "READ");
+        SecurityUser securityUser2= new SecurityUser("user2","12345","WRITE");
+
+        List<? extends UserDetails> list=  Arrays.asList(securityUser1,securityUser2);
+
+        CustomUserDetailsService customUserDetailsService= new CustomUserDetailsService(list);
+
+        return customUserDetailsService;
+
+
+
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
