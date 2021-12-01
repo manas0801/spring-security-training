@@ -15,6 +15,7 @@
 		<module>spring-security-with-custom-ud</module>
 		<module>spring-security-with-jdbc-userdetails</module>
 		<module>spring-security-otp-auth-server</module>
+		<module>spring-security-with-otp-resource-server</module>
 	</modules>
 
 
