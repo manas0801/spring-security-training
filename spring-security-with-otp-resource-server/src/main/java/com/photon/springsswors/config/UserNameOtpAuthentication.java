@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class UserNameOtpAuthentication extends UserNamePasswordAuthentication {
+public class UserNameOtpAuthentication extends UsernamePasswordAuthenticationToken {
     public UserNameOtpAuthentication(Object principal, Object credentials) {
         super(principal, credentials);
     }
