@@ -17,6 +17,8 @@
 		<module>spring-security-otp-auth-server</module>
 		<module>spring-security-with-otp-resource-server</module>
 		<module> Spring-security-oauth-server</module>
+		<module>spring-security-oauth-resourceserver</module>
+		<module>spring-security-oauth-client</module>
 	</modules>
 
 
