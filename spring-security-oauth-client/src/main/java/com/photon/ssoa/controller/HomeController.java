@@ -15,24 +15,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Base64;
 
 @RequestMapping
 @Controller
 public class HomeController {
-  @Value("${spring.security.oauth2.client.provider.myprovider.token-uri}")
+  @Value("${spring.security.oauth2.client.provider.github.token-uri}")
   String tokenUri;
 
-  @Value("${spring.security.oauth2.client.registration.myprovider.authorizationGrantType}")
-  String grantType;
+//  @Value("${spring.security.oauth2.client.registration.myprovider.authorizationGrantType}")
+//  String grantType;
 
-  @Value("${spring.security.oauth2.client.registration.myprovider.redirectUri}")
+  @Value("${spring.security.oauth2.client.registration.github.redirectUri}")
   String redirecturi;
 
-  @GetMapping("/hello")
-  public String helloController() {
-    return "hello.html";
-  }
+//  @GetMapping("/")
+//  public String helloController() {
+//    return "hello.html";
+//  }
 
   @GetMapping("/home")
   public String homeController(@RequestParam("code") String code,@RequestParam("state") String state, Model model) {
@@ -41,16 +42,21 @@ public class HomeController {
     // auth
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-    map.add("code", code);
-    map.add("grant_type", grantType);
-    map.add("scope", "webclient");
+    map.add("code",code);
+    map.add("client_id","90643280503ef576f4cf");
+    map.add("client_secret","db74f67a3e85ca341dbf6445eed939368fdf088e");
     map.add("redirect_uri", redirecturi);
-    String plainCred = "app2:sec2";
-    String base64String=new String(Base64.getEncoder().encode(plainCred.getBytes()));
-    System.out.println("auth " + base64String);
-    httpHeaders.add(
-        "Authorization", "basic " + base64String);
+//    map.add("code", code);
+//    map.add("grant_type", grantType);
+//    map.add("scope", "webclient");
+//    map.add("redirect_uri", redirecturi);
+//    String plainCred = "app2:sec2";
+//    String base64String=new String(Base64.getEncoder().encode(plainCred.getBytes()));
+//    System.out.println("auth " + base64String);
+//    httpHeaders.add(
+//        "Authorization", "basic " + base64String);
     HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, httpHeaders);
     AuthResponse authResponse =
         new RestTemplate().postForEntity(tokenUri, entity, AuthResponse.class).getBody();
@@ -58,9 +64,9 @@ public class HomeController {
     System.out.println("Token " + authResponse.getAccess_token());
 
     HttpHeaders httpHeaders1 = new HttpHeaders();
-    httpHeaders.add(
+    httpHeaders1.add(
         "authorization", authResponse.getToken_type() + " " + authResponse.getAccess_token());
-    HttpEntity entity1 = new HttpEntity(httpHeaders);
+    HttpEntity entity1 = new HttpEntity(httpHeaders1);
     String message =
         new RestTemplate()
             .exchange("http://localhost:30008/api/v1/hello", HttpMethod.GET, entity1, String.class)
