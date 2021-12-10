@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 
@@ -20,6 +22,12 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     UserDetailsService userDetailsService;
+
+    @Autowired
+    JwtTokenStore jwtTokenStore;
+
+    @Autowired
+    JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired
     DataSource dataSource;
@@ -39,7 +47,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager).userDetailsService(userDetailsService)
-        .tokenStore(new JdbcTokenStore(dataSource));
+        .tokenStore(jwtTokenStore).accessTokenConverter(jwtAccessTokenConverter);
     }
 
     @Override
